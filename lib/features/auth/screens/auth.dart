@@ -15,7 +15,15 @@ class _AuthState extends State<Auth> {
   final logInKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,49 +44,154 @@ class _AuthState extends State<Auth> {
           ),
           auth == 'signUp'
               ? Form(
-                  child: Column(
-                  children: [
-                    TextFormField(
-                      controller: nameController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black26),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        TextFormField(
+                          controller: nameController,
+                          decoration: const InputDecoration(
+                              hintText: 'enter your name',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black26),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black26),
+                              )),
+                          validator: (value) {},
                         ),
-                      ),
-                      validator: (value) {},
-                    ),
-                                        TextFormField(
-                      controller: emailController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black26),
+                        const SizedBox(
+                          height: 8,
                         ),
-                      ),
-                      validator: (value) {},
-                    ),
-                    TextFormField(
-                      controller: passwordController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black26),
+                        TextFormField(
+                          controller: emailController,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter your email',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black26),
+                            ),
+                          ),
+                          validator: (value) {},
                         ),
-                      ),
-                      validator: (value) {},
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        TextFormField(
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter a password',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black26),
+                            ),
+                          ),
+                          validator: (value) {},
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            backgroundColor: secondaryColor,
+                            elevation: 1,
+                            foregroundColor: Colors.white,
+                            minimumSize: const Size(double.infinity, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  12), // Adjust the value for more/less rounding
+                            ),
+                          ),
+                          child: const Text(
+                            'Sign Up',
+                          ),
+                        ),
+                      ],
                     ),
-
-                  ],
-                ))
+                  ),
+                )
               : const SizedBox.shrink(),
           ListTile(
             title: const Text('Log in'),
             leading: Radio(
                 activeColor: secondaryColor,
-                value: 'signIn',
+                value: 'logIn',
                 groupValue: auth,
                 onChanged: (value) => setState(() {
                       auth = value!;
                     })),
           ),
+          auth == 'logIn'
+              ? Form(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        // TextFormField(
+                        //   controller: nameController,
+                        //   decoration: const InputDecoration(
+                        //       hintText: 'enter your name',
+                        //       border: OutlineInputBorder(
+                        //         borderSide: BorderSide(color: Colors.black26),
+                        //       ),
+                        //       enabledBorder: OutlineInputBorder(
+                        //         borderSide: BorderSide(color: Colors.black26),
+                        //       )),
+                        //   validator: (value) {},
+                        // ),
+                        // const SizedBox(
+                        //   height: 8,
+                        // ),
+                        TextFormField(
+                          controller: emailController,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter your email',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black26),
+                            ),
+                          ),
+                          validator: (value) {},
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        TextFormField(
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter your password',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black26),
+                            ),
+                          ),
+                          validator: (value) {},
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            backgroundColor: secondaryColor,
+                            elevation: 1,
+                            foregroundColor: Colors.white,
+                            minimumSize: const Size(double.infinity, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  12), // Adjust the value for more/less rounding
+                            ),
+                          ),
+                          child: const Text(
+                            'Log In ',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
         ],
       )),
     );
