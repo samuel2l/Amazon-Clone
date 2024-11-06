@@ -27,11 +27,20 @@ class _AuthState extends State<Auth> {
     super.dispose();
   }
 
-  void signUp() {
+  void signUp(BuildContext context) {
     authService.signUp(
       name: nameController.text.trim(),
       password: passwordController.text.trim(),
       email: emailController.text.trim(),
+      context: context,
+    );
+  }
+
+  void login(BuildContext context) {
+    authService.login(
+      password: passwordController.text.trim(),
+      email: emailController.text.trim(),
+      context: context,
     );
   }
 
@@ -117,7 +126,7 @@ class _AuthState extends State<Auth> {
                           TextButton(
                             onPressed: () {
                               if (signUpKey.currentState!.validate()) {
-                                signUp();
+                                signUp(context);
                               }
                             },
                             style: TextButton.styleFrom(
@@ -149,7 +158,7 @@ class _AuthState extends State<Auth> {
             ),
             auth == 'logIn'
                 ? Form(
-                    key: logInKey, // Add the key here
+                    key: logInKey,
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
@@ -191,7 +200,7 @@ class _AuthState extends State<Auth> {
                           TextButton(
                             onPressed: () {
                               if (logInKey.currentState!.validate()) {
-                                // Perform login
+                                login(context);
                               }
                             },
                             style: TextButton.styleFrom(
