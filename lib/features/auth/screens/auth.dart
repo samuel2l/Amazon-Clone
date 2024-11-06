@@ -29,9 +29,10 @@ class _AuthState extends State<Auth> {
 
   void signUp() {
     authService.signUp(
-        name: nameController.text.trim(),
-        password: passwordController.text.trim(),
-        email: emailController.text.trim());
+      name: nameController.text.trim(),
+      password: passwordController.text.trim(),
+      email: emailController.text.trim(),
+    );
   }
 
   @override
@@ -39,202 +40,179 @@ class _AuthState extends State<Auth> {
     return Scaffold(
       backgroundColor: greyBackgroundCOlor,
       body: SafeArea(
-          child: Column(
-        children: [
-          ListTile(
-            title: const Text('Create account'),
-            leading: Radio(
-                // the value and group value have to be of same type and this also affects the value parameer the onchanged will take
+        child: Column(
+          children: [
+            ListTile(
+              title: const Text('Create account'),
+              leading: Radio(
                 activeColor: secondaryColor,
                 value: 'signUp',
                 groupValue: auth,
                 onChanged: (value) => setState(() {
-                      auth = value!;
-                    })),
-          ),
-          auth == 'signUp'
-              ? Form(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        TextFormField(
-                          controller: nameController,
-                          decoration: const InputDecoration(
-                              hintText: 'enter your name',
+                  auth = value!;
+                }),
+              ),
+            ),
+            auth == 'signUp'
+                ? Form(
+                    key: signUpKey, // Add the key here
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          TextFormField(
+                            controller: nameController,
+                            decoration: const InputDecoration(
+                              hintText: 'Enter your name',
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.black26),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.black26),
-                              )),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'enter a value';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        TextFormField(
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter your email',
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black26),
+                              ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your name';
+                              }
+                              return null; //means input has been validated
+                            },
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'enter a value';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        TextFormField(
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter a password',
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black26),
+                          const SizedBox(height: 8),
+                          TextFormField(
+                            controller: emailController,
+                            decoration: const InputDecoration(
+                              hintText: 'Enter your email',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black26),
+                              ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              }
+                              return null; //means input has been validated
+                            },
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'enter a value';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            print('ei?');
-                            signUp();
-                          },
-                          style: TextButton.styleFrom(
-                            backgroundColor: secondaryColor,
-                            elevation: 1,
-                            foregroundColor: Colors.white,
-                            minimumSize: const Size(double.infinity, 50),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  12), // Adjust the value for more/less rounding
+                          const SizedBox(height: 8),
+                          TextFormField(
+                            controller: passwordController,
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                              hintText: 'Enter a password',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black26),
+                              ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter a password';
+                              }
+
+                              return null; //means input has been validated
+                            },
                           ),
-                          child: const Text(
-                            'Sign Up',
+                          const SizedBox(height: 8),
+                          TextButton(
+                            onPressed: () {
+                              if (signUpKey.currentState!.validate()) {
+                                signUp();
+                              }
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: secondaryColor,
+                              elevation: 1,
+                              foregroundColor: Colors.white,
+                              minimumSize: const Size(double.infinity, 50),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: const Text('Sign Up'),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              : const SizedBox.shrink(),
-          ListTile(
-            title: const Text('Log in'),
-            leading: Radio(
+                  )
+                : const SizedBox.shrink(),
+            ListTile(
+              title: const Text('Log in'),
+              leading: Radio(
                 activeColor: secondaryColor,
                 value: 'logIn',
                 groupValue: auth,
                 onChanged: (value) => setState(() {
-                      auth = value!;
-                    })),
-          ),
-          auth == 'logIn'
-              ? Form(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        // TextFormField(
-                        //   controller: nameController,
-                        //   decoration: const InputDecoration(
-                        //       hintText: 'enter your name',
-                        //       border: OutlineInputBorder(
-                        //         borderSide: BorderSide(color: Colors.black26),
-                        //       ),
-                        //       enabledBorder: OutlineInputBorder(
-                        //         borderSide: BorderSide(color: Colors.black26),
-                        //       )),
-                        //   validator: (value) {
-                        // if(value==null|| value.isEmpty){
-                        // return 'enter a value';}},
-                        // ),
-                        // return null;
-                        // const SizedBox(
-                        //   height: 8,
-                        // ),
-                        TextFormField(
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter your email',
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black26),
+                  auth = value!;
+                }),
+              ),
+            ),
+            auth == 'logIn'
+                ? Form(
+                    key: logInKey, // Add the key here
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          TextFormField(
+                            controller: emailController,
+                            decoration: const InputDecoration(
+                              hintText: 'Enter your email',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black26),
+                              ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              }
+                              return null; //means input has been validated
+                            },
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'enter a value';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        TextFormField(
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter your password',
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black26),
+                          const SizedBox(height: 8),
+                          TextFormField(
+                            controller: passwordController,
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                              hintText: 'Enter your password',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black26),
+                              ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              return null; //means input has been validated
+                            },
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'enter a value';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          style: TextButton.styleFrom(
-                            backgroundColor: secondaryColor,
-                            elevation: 1,
-                            foregroundColor: Colors.white,
-                            minimumSize: const Size(double.infinity, 50),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  12), // Adjust the value for more/less rounding
+                          const SizedBox(height: 8),
+                          TextButton(
+                            onPressed: () {
+                              if (logInKey.currentState!.validate()) {
+                                // Perform login
+                              }
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: secondaryColor,
+                              elevation: 1,
+                              foregroundColor: Colors.white,
+                              minimumSize: const Size(double.infinity, 50),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                             ),
+                            child: const Text('Log In'),
                           ),
-                          child: const Text(
-                            'Log In ',
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              : const SizedBox.shrink(),
-        ],
-      )),
+                  )
+                : const SizedBox.shrink(),
+          ],
+        ),
+      ),
     );
   }
 }
