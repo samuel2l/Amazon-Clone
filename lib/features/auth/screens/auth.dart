@@ -211,7 +211,7 @@ class _AuthState extends State<Auth> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                            ),
+                            ), 
                             child: const Text('Log In'),
                           ),
                         ],
