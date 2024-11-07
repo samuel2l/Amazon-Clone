@@ -17,7 +17,12 @@ class _HomeState extends State<Home> {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child: Text('Hey there ${user.token}'),
+          child: Column(
+            children: [
+              Text(user.email),
+              Text('Hey there ${user.name}'),
+            ],
+          ),
         ),
       ),
     );
