@@ -7,6 +7,7 @@ import 'package:amazon/features/models/user.dart';
 import 'package:amazon/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   void signUp(
@@ -57,8 +58,15 @@ class AuthService {
         },
       );
       print(response.body);
+      // ignore: use_build_context_synchronously
+      httpErrorHandle(response: response, context: context, onSuccess: ()async{
+        SharedPreferences prefs=await SharedPreferences.getInstance();
+        prefs.setString('x-auth-token', jsonDecode(response.body)['token']);
+
+      });
     } catch (e) {
-      print(e);
+      // ignore: use_build_context_synchronously
+      showSnackBar(context,e.toString());
     }
   }
 }
