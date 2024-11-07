@@ -41,6 +41,12 @@ class AuthService {
           context: context,
           onSuccess: () {
             showSnackBar(context, 'Account created!');
+            Navigator.pushNamedAndRemoveUntil(
+              // ignore: use_build_context_synchronously
+              context,
+              Home.routeName,
+              (route) => false,
+            );
           });
     } catch (e) {
       // ignore: use_build_context_synchronously
