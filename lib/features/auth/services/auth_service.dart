@@ -3,10 +3,13 @@
 import 'dart:convert';
 
 import 'package:amazon/constants.dart';
+import 'package:amazon/features/home/screens/home.dart';
 import 'package:amazon/features/models/user.dart';
+import 'package:amazon/providers/user_provider.dart';
 import 'package:amazon/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
@@ -59,14 +62,24 @@ class AuthService {
       );
       print(response.body);
       // ignore: use_build_context_synchronously
-      httpErrorHandle(response: response, context: context, onSuccess: ()async{
-        SharedPreferences prefs=await SharedPreferences.getInstance();
-        prefs.setString('x-auth-token', jsonDecode(response.body)['token']);
-
-      });
+      httpErrorHandle(
+          response: response,
+          context: context,
+          onSuccess: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setString('x-auth-token', jsonDecode(response.body)['token']);
+            Provider.of<UserProvider>(context, listen: false)
+                .setUser(response.body);
+            Navigator.pushNamedAndRemoveUntil(
+              // ignore: use_build_context_synchronously
+              context,
+              Home.routeName,
+              (route) => false,
+            );
+          });
     } catch (e) {
       // ignore: use_build_context_synchronously
-      showSnackBar(context,e.toString());
+      showSnackBar(context, e.toString());
     }
   }
 }
