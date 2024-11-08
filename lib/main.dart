@@ -1,7 +1,7 @@
 import 'package:amazon/constants.dart';
 import 'package:amazon/features/auth/screens/auth.dart';
 import 'package:amazon/features/auth/services/auth_service.dart';
-import 'package:amazon/features/home/screens/home.dart';
+import 'package:amazon/features/common/widgets/bottom_navbar.dart';
 import 'package:amazon/providers/user_provider.dart';
 import 'package:amazon/router.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const Home()
+          ? const BottomNavBar()
           : const Auth(),
       debugShowCheckedModeBanner: false,
     );

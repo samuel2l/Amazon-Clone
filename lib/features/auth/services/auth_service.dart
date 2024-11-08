@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:amazon/constants.dart';
-import 'package:amazon/features/home/screens/home.dart';
+import 'package:amazon/features/common/widgets/bottom_navbar.dart';
 import 'package:amazon/features/models/user.dart';
 import 'package:amazon/providers/user_provider.dart';
 import 'package:amazon/utils.dart';
@@ -45,7 +45,7 @@ class AuthService {
             Navigator.pushNamedAndRemoveUntil(
               // ignore: use_build_context_synchronously
               context,
-              Home.routeName,
+              BottomNavBar.routeName,
               (route) => false,
             );
           });
@@ -81,7 +81,7 @@ class AuthService {
             Navigator.pushNamedAndRemoveUntil(
               // ignore: use_build_context_synchronously
               context,
-              Home.routeName,
+              BottomNavBar.routeName,
               (route) => false,
             );
           });
