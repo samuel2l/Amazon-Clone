@@ -42,6 +42,8 @@ class AuthService {
           context: context,
           onSuccess: () {
             showSnackBar(context, 'Account created!');
+                        Provider.of<UserProvider>(context, listen: false)
+                .setUser(response.body);
             Navigator.pushNamedAndRemoveUntil(
               // ignore: use_build_context_synchronously
               context,

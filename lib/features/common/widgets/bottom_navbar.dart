@@ -1,4 +1,5 @@
 import 'package:amazon/constants.dart';
+import 'package:amazon/features/account/screens/account.dart';
 import 'package:amazon/features/home/screens/home.dart';
 
 import 'package:flutter/material.dart';
@@ -18,8 +19,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   List<Widget> pages = [
     const Home(),
-    const Text('page 2'),
-    const Text('page 3')
+    const Account(),
+    const Center(child: Text('page 3')),
   ];
 
   void updatePage(int page) {
@@ -41,7 +42,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
         iconSize: 28,
         onTap: updatePage,
         items: [
-          // HOME
           BottomNavigationBarItem(
             icon: Container(
               width: bottomNavBarWidth,

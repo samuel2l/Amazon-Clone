@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SingleProduct extends StatelessWidget {
+class Product extends StatelessWidget {
   final String image;
-  const SingleProduct({
-    Key? key,
+  const Product({
+    super.key,
     required this.image,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class SingleProduct extends StatelessWidget {
         child: Container(
           width: 180,
           padding: const EdgeInsets.all(10),
-          child: Image.network(
+          child: Image.asset(
             image,
             fit: BoxFit.fitHeight,
             width: 180,

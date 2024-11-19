@@ -12,7 +12,13 @@ class Orders extends StatefulWidget {
 class _OrdersState extends State<Orders> {
   // List<Order>? orders;
   // final AccountServices accountServices = AccountServices();
+List<String> imgs=[
+'assets/images/appliances.jpeg',
+'assets/images/appliances.jpeg',
+'assets/images/appliances.jpeg',
+'assets/images/appliances.jpeg',
 
+];
   @override
   void initState() {
     super.initState();
@@ -26,9 +32,7 @@ class _OrdersState extends State<Orders> {
 
   @override
   Widget build(BuildContext context) {
-    return 'orders' == null
-        ? const Center(child: CircularProgressIndicator(),)
-        : Column(
+    return Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,7 +62,6 @@ class _OrdersState extends State<Orders> {
                   ),
                 ],
               ),
-              // display orders
               Container(
                 height: 170,
                 padding: const EdgeInsets.only(
@@ -68,22 +71,9 @@ class _OrdersState extends State<Orders> {
                 ),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 4,//orders!.length
+                  itemCount: imgs.length,
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        // Navigator.pushNamed(
-                        //   context,
-                        //   OrderDetailScreen.routeName,
-                        //   arguments: orders![index],
-                        // );
-                      },
-                      child: const SingleProduct(
-                        // image: orders![index].products[0].images[0],
-                         image: '',
-                        
-                      ),
-                    );
+                    return Product(image:imgs[index]);
                   },
                 ),
               ),

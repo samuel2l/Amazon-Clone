@@ -1,4 +1,5 @@
 import 'package:amazon/constants.dart';
+import 'package:amazon/features/account/screens/account.dart';
 import 'package:amazon/features/auth/screens/auth.dart';
 import 'package:amazon/features/auth/services/auth_service.dart';
 import 'package:amazon/features/common/widgets/bottom_navbar.dart';
@@ -49,9 +50,10 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const BottomNavBar()
-          : const Auth(),
+      // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+      //     ? const BottomNavBar()
+      //     : const Auth(),
+      home: const Account(),
       debugShowCheckedModeBanner: false,
     );
   }
