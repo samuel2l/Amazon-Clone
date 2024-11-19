@@ -1,15 +1,17 @@
+import 'package:amazon/constants.dart';
+import 'package:amazon/features/account/widgets/product.dart';
 import 'package:flutter/material.dart';
 
 class Orders extends StatefulWidget {
-  const Orders({Key? key}) : super(key: key);
+  const Orders({super.key});
 
   @override
   State<Orders> createState() => _OrdersState();
 }
 
 class _OrdersState extends State<Orders> {
-  List<Order>? orders;
-  final AccountServices accountServices = AccountServices();
+  // List<Order>? orders;
+  // final AccountServices accountServices = AccountServices();
 
   @override
   void initState() {
@@ -18,14 +20,14 @@ class _OrdersState extends State<Orders> {
   }
 
   void fetchOrders() async {
-    orders = await accountServices.fetchMyOrders(context: context);
+    // orders = await accountServices.fetchMyOrders(context: context);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return orders == null
-        ? const Loader()
+    return 'orders' == null
+        ? const Center(child: CircularProgressIndicator(),)
         : Column(
             children: [
               Row(
@@ -50,7 +52,7 @@ class _OrdersState extends State<Orders> {
                     child: Text(
                       'See all',
                       style: TextStyle(
-                        color: GlobalVariables.selectedNavBarColor,
+                        color: selectedNavBarColor,
                       ),
                     ),
                   ),
@@ -66,18 +68,20 @@ class _OrdersState extends State<Orders> {
                 ),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: orders!.length,
+                  itemCount: 4,//orders!.length
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          OrderDetailScreen.routeName,
-                          arguments: orders![index],
-                        );
+                        // Navigator.pushNamed(
+                        //   context,
+                        //   OrderDetailScreen.routeName,
+                        //   arguments: orders![index],
+                        // );
                       },
-                      child: SingleProduct(
-                        image: orders![index].products[0].images[0],
+                      child: const SingleProduct(
+                        // image: orders![index].products[0].images[0],
+                         image: '',
+                        
                       ),
                     );
                   },

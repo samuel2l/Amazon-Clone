@@ -1,6 +1,6 @@
 import 'package:amazon/constants.dart';
+import 'package:amazon/features/account/widgets/account_btn.dart';
 import 'package:amazon/features/account/widgets/orders.dart';
-import 'package:amazon/features/account/widgets/top_btn.dart';
 import 'package:amazon/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -59,34 +59,48 @@ class AccountScreen extends StatelessWidget {
                 gradient: appBarGradient,
               ),
               padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-              child: Row(
-                children: [
-                  RichText(
-                    text: TextSpan(
-                      text: 'Hello, ',
-                      style: const TextStyle(
-                        fontSize: 22,
-                        color: Colors.black,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: user.name,
-                          style: const TextStyle(
-                            fontSize: 22,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
+              child: RichText(
+                text: TextSpan(
+                  text: 'Hello, ${user.name}',
+                  style: const TextStyle(
+                    fontSize: 22,
+                    color: Colors.black,
                   ),
-                ],
+                ),
               ),
             ),
             const SizedBox(height: 10),
-            TopButtons(),
-            SizedBox(height: 20),
-            Orders(),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    AccountButton(
+                      text: 'Orders',
+                      onTap: () {},
+                    ),
+                    AccountButton(
+                      text: 'Sell',
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    AccountButton(
+                        text: 'Logout',
+                        onTap: () => {} //AccountServices().logOut(context),
+                        ),
+                    AccountButton(
+                      text: 'My Wishlist',
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            const Orders(),
           ],
         ),
       ),
