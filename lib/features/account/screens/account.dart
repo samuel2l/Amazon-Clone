@@ -146,6 +146,7 @@ class Account extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
+            padding: const EdgeInsets.only(left: 20),
             decoration: const BoxDecoration(gradient: appBarGradient),
             child: Text(
               'Hello, ${user.name}',
@@ -186,7 +187,6 @@ class Account extends StatelessWidget {
               ),
             ],
           ),
-
           const SizedBox(height: 20),
           const Orders(),
         ],
