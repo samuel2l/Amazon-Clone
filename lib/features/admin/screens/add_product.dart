@@ -20,22 +20,17 @@ class _AddProductState extends State<AddProduct> {
   final TextEditingController stockController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   String selectedCategory = 'Mobiles';
-  List<File> selectedImages = []; // List to store multiple images
+  List<File> selectedImages = [];
 
   void pickImages() async {
     final ImagePicker picker = ImagePicker();
-    // Use pickMultiImage for selecting multiple images
     List<XFile>? pickedFiles = await picker.pickMultiImage();
 
-    if (pickedFiles != null) {
-      setState(() {
-        // Convert XFile to File and add to the list
-        selectedImages =
-            pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
-      });
-    } else {
-      print('No images selected.');
-    }
+    setState(() {
+      // Convert XFile to File and add to the list
+      selectedImages =
+          pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
+    });
   }
 
   @override
@@ -90,21 +85,28 @@ class _AddProductState extends State<AddProduct> {
                               ),
                             ],
                           )
-                        : GridView.builder(
-                            itemCount: selectedImages.length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 5,
-                              mainAxisSpacing: 5,
-                            ),
-                            itemBuilder: (context, index) {
-                              return Image.file(
-                                selectedImages[index],
-                                fit: BoxFit.cover,
-                              );
-                            },
-                          ),
+                        :
+                        //in case you pick one image though make sure it fills the screen
+                        selectedImages.length == 1
+                            ? Image.file(
+                                selectedImages[0],
+                                // fit: BoxFit.cover,
+                              )
+                            : GridView.builder(
+                                itemCount: selectedImages.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 5,
+                                  mainAxisSpacing: 5,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return Image.file(
+                                    selectedImages[index],
+                                    fit: BoxFit.cover,
+                                  );
+                                },
+                              ),
                   ),
                 ),
               ),
