@@ -20,17 +20,31 @@ class _AddProductState extends State<AddProduct> {
   final TextEditingController stockController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   String selectedCategory = 'Mobiles';
-  File? selectedImage;
-  void pickImagee() async {
+  List<File> selectedImages = []; // List to store multiple images
+
+  void pickImages() async {
     final ImagePicker picker = ImagePicker();
-    XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
+    // Use pickMultiImage for selecting multiple images
+    List<XFile>? pickedFiles = await picker.pickMultiImage();
+
+    if (pickedFiles != null) {
       setState(() {
-        selectedImage = File(pickedFile.path);
+        // Convert XFile to File and add to the list
+        selectedImages =
+            pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
       });
     } else {
-      print('No image selected.');
+      print('No images selected.');
     }
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    priceController.dispose();
+    stockController.dispose();
+    descriptionController.dispose();
+    super.dispose();
   }
 
   @override
@@ -52,24 +66,17 @@ class _AddProductState extends State<AddProduct> {
           children: [
             GestureDetector(
               onTap: () {
-                pickImagee();
+                pickImages(); // Use the updated pickImages method
               },
               child: DottedBorder(
                 borderType: BorderType.RRect,
                 radius: const Radius.circular(10),
                 dashPattern: const [10, 4],
-                //  [4, 2] means a visible segment of length 4 is followed by a gap of length 2.
-                // •	[5, 3, 2, 3] means:
-                // •	Dash of length 5,
-                // •	Gap of length 3,
-                // •	Dash of length 2,
-                // •	Gap of length 3, repeating.
-
                 child: Center(
                   child: SizedBox(
                     height: 150,
                     width: double.infinity,
-                    child: selectedImage == null
+                    child: selectedImages.isEmpty
                         ? const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -78,13 +85,25 @@ class _AddProductState extends State<AddProduct> {
                                 size: 45,
                               ),
                               Text(
-                                'Select image of new product',
+                                'Select images of new product',
                                 style: TextStyle(color: Colors.grey),
                               ),
                             ],
                           )
-                        : Image.file(
-                            selectedImage!,
+                        : GridView.builder(
+                            itemCount: selectedImages.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 5,
+                              mainAxisSpacing: 5,
+                            ),
+                            itemBuilder: (context, index) {
+                              return Image.file(
+                                selectedImages[index],
+                                fit: BoxFit.cover,
+                              );
+                            },
                           ),
                   ),
                 ),
@@ -123,15 +142,15 @@ class _AddProductState extends State<AddProduct> {
               height: 15,
             ),
             DropdownButton(
-              value: selectedCategory, // Ensure null if no selection
+              value: selectedCategory,
               hint: const Text('select item category'),
               items: const [
                 DropdownMenuItem(
-                  value: 'Mobiles', // Set the value
+                  value: 'Mobiles',
                   child: Text('Mobiles'),
                 ),
                 DropdownMenuItem(
-                  value: 'Essentials', // Set the value
+                  value: 'Essentials',
                   child: Text('Essentials'),
                 ),
                 DropdownMenuItem(
