@@ -16,6 +16,8 @@ class _AdminState extends State<Admin> {
 
   List<Widget> pages = [
     const ProductsSold(),
+
+
     const Center(child: Text('page 2')),
     const Center(child: Text('page 3')),
   ];

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:amazon/constants.dart';
 import 'package:amazon/features/common/widgets/input_field.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({super.key});
@@ -17,6 +20,19 @@ class _AddProductState extends State<AddProduct> {
   final TextEditingController stockController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   String selectedCategory = 'Mobiles';
+  File? selectedImage;
+  void pickImagee() async {
+    final ImagePicker picker = ImagePicker();
+    XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        selectedImage = File(pickedFile.path);
+      });
+    } else {
+      print('No image selected.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,32 +50,42 @@ class _AddProductState extends State<AddProduct> {
         padding: const EdgeInsets.all(12.0),
         child: ListView(
           children: [
-            DottedBorder(
-              borderType: BorderType.RRect,
-              radius: const Radius.circular(10),
-              dashPattern: const [10, 4],
-              //  [4, 2] means a visible segment of length 4 is followed by a gap of length 2.
-              // •	[5, 3, 2, 3] means:
-              // •	Dash of length 5,
-              // •	Gap of length 3,
-              // •	Dash of length 2,
-              // •	Gap of length 3, repeating.
+            GestureDetector(
+              onTap: () {
+                pickImagee();
+              },
+              child: DottedBorder(
+                borderType: BorderType.RRect,
+                radius: const Radius.circular(10),
+                dashPattern: const [10, 4],
+                //  [4, 2] means a visible segment of length 4 is followed by a gap of length 2.
+                // •	[5, 3, 2, 3] means:
+                // •	Dash of length 5,
+                // •	Gap of length 3,
+                // •	Dash of length 2,
+                // •	Gap of length 3, repeating.
 
-              child: const Center(
-                child: SizedBox(
-                  height: 150,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.folder_open,
-                        size: 45,
-                      ),
-                      Text(
-                        'Select image of new product',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ],
+                child: Center(
+                  child: SizedBox(
+                    height: 150,
+                    width: double.infinity,
+                    child: selectedImage == null
+                        ? const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.folder_open,
+                                size: 45,
+                              ),
+                              Text(
+                                'Select image of new product',
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          )
+                        : Image.file(
+                            selectedImage!,
+                          ),
                   ),
                 ),
               ),
@@ -83,14 +109,14 @@ class _AddProductState extends State<AddProduct> {
             ),
             InputField(
                 controller: descriptionController,
-                hintText: 'Enter current stock',
+                hintText: 'Enter product description',
                 maxLines: 7),
             const SizedBox(
               height: 15,
             ),
             InputField(
               controller: stockController,
-              hintText: 'Enter product name',
+              hintText: 'Enter product stock',
               maxLines: 1,
             ),
             const SizedBox(
