@@ -16,10 +16,9 @@ class _AddProductState extends State<AddProduct> {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController stockController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-    String selectedCategory = 'Mobiles';
+  String selectedCategory = 'Mobiles';
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -97,40 +96,54 @@ class _AddProductState extends State<AddProduct> {
             const SizedBox(
               height: 15,
             ),
-DropdownButton(
-  value: selectedCategory, // Ensure null if no selection
-  hint: const Text('select item category'),
-  items: const [
-        DropdownMenuItem(
-      value: 'Mobiles', // Set the value
-      child: Text('Mobiles'),
-    ),
-
-    DropdownMenuItem(
-      value: 'Essentials', // Set the value
-      child: Text('Essentials'),
-    ),
-
-    DropdownMenuItem(
-      value: 'Appliances',
-      child: Text('Appliances'),
-    ),
-    DropdownMenuItem(
-      value: 'Books',
-      child: Text('Books'),
-    ),
-    DropdownMenuItem(
-      value: 'Fashion',
-      child: Text('Fashion'),
-    ),
-  ],
-  onChanged: (value) {
-    
-    setState(() {
-      selectedCategory = value!; 
-    });
-  },
-)          ],
+            DropdownButton(
+              value: selectedCategory, // Ensure null if no selection
+              hint: const Text('select item category'),
+              items: const [
+                DropdownMenuItem(
+                  value: 'Mobiles', // Set the value
+                  child: Text('Mobiles'),
+                ),
+                DropdownMenuItem(
+                  value: 'Essentials', // Set the value
+                  child: Text('Essentials'),
+                ),
+                DropdownMenuItem(
+                  value: 'Appliances',
+                  child: Text('Appliances'),
+                ),
+                DropdownMenuItem(
+                  value: 'Books',
+                  child: Text('Books'),
+                ),
+                DropdownMenuItem(
+                  value: 'Fashion',
+                  child: Text('Fashion'),
+                ),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  selectedCategory = value!;
+                });
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextButton(
+              onPressed: () {},
+              style: TextButton.styleFrom(
+                backgroundColor: secondaryColor,
+                elevation: 1,
+                foregroundColor: Colors.white,
+                minimumSize: const Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: const Text('Add Product'),
+            ),
+          ],
         ),
       ),
     );
