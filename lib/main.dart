@@ -52,10 +52,9 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-      //     ? Provider.of<UserProvider>(context).user.type=='user'? const BottomNavBar():const Admin()
-      //     : const Auth(),
-      home: const Admin(),
+      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+          ? Provider.of<UserProvider>(context).user.type=='user'? const BottomNavBar():const Admin()
+          : const Auth(),
       debugShowCheckedModeBanner: false,
     );
   }
