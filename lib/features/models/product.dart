@@ -8,7 +8,10 @@ final String description;
 final int stock;
 final String? id;
 final String? userId;
+final String category;
 final List<String> images;
+
+
 
 
 
@@ -20,6 +23,7 @@ final List<String> images;
       'stock': stock,
       'id': id,
       'userId': userId,
+      'category': category,
       'images': images,
     };
   }
@@ -31,7 +35,8 @@ final List<String> images;
       description: map['description'] as String,
       stock: map['stock'] as int,
       id: map['_id'] != null ? map['_id'] as String : null,
-      userId: map['userId'] as String,
+      userId: map['userId'] != null ? map['userId'] as String : null,
+      category: map['category'] as String,
       images: List<String>.from((map['images'] as List<String>),
     ));
   }
@@ -39,6 +44,5 @@ final List<String> images;
   String toJson() => json.encode(toMap());
 
   factory Product.fromJson(String source) => Product.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  Product( {required this.name, required this.price, required this.description, required this.stock, required this.images,this.id, this.userId,});
+  Product( {required this.name, required this.price, required this.description, required this.stock,required this.category, required this.images,this.id, this.userId,});
 }
