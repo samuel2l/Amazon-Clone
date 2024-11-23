@@ -54,15 +54,39 @@ class AdminService {
           context: context,
           onSuccess: () {
             showSnackBar(context, 'Product added successfully');
-            Provider.of<UserProvider>(context, listen: false)
-                .setUser(response.body);
             Navigator.pop(
-              // ignore: use_build_context_synchronously
               context,
             );
           });
     } catch (e) {
       showSnackBar(context, e.toString());
     }
+  }
+
+   getAllProducts(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    // try {
+      http.Response response = await http.get(
+        Uri.parse('$uri/admin/products'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token
+        },
+      );
+      httpErrorHandle(
+          response: response,
+          // ignore: use_build_context_synchronously
+          context: context,
+          onSuccess: () {
+            showSnackBar(context, 'Products loaded successfully');
+            
+          });
+
+          return response.body;
+          // return response.body;
+    // } catch (e) {
+    //   showSnackBar(context, e.toString());
+    // }
   }
 }

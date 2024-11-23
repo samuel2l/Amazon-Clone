@@ -21,6 +21,7 @@ class _AddProductState extends State<AddProduct> {
   final TextEditingController stockController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final AdminService adminService = AdminService();
+
   String selectedCategory = 'Mobiles';
   List<File> selectedImages = [];
 
