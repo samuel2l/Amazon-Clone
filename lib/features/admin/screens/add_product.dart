@@ -23,11 +23,11 @@ class _AddProductState extends State<AddProduct> {
   List<File> selectedImages = [];
 
   void pickImages() async {
+
     final ImagePicker picker = ImagePicker();
     List<XFile>? pickedFiles = await picker.pickMultiImage();
 
     setState(() {
-      // Convert XFile to File and add to the list
       selectedImages =
           pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
     });
