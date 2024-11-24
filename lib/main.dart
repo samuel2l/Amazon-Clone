@@ -1,10 +1,8 @@
 import 'package:amazon/constants.dart';
-import 'package:amazon/features/account/screens/account.dart';
 import 'package:amazon/features/admin/screens/admin.dart';
 import 'package:amazon/features/auth/screens/auth.dart';
 import 'package:amazon/features/auth/services/auth_service.dart';
 import 'package:amazon/features/common/widgets/bottom_navbar.dart';
-import 'package:amazon/features/home/screens/home.dart';
 import 'package:amazon/providers/user_provider.dart';
 import 'package:amazon/router.dart';
 import 'package:flutter/material.dart';
