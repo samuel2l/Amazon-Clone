@@ -35,14 +35,13 @@ class AuthService {
         },
       );
 
-
       httpErrorHandle(
           response: response,
           // ignore: use_build_context_synchronously
           context: context,
           onSuccess: () {
             showSnackBar(context, 'Account created!');
-                        Provider.of<UserProvider>(context, listen: false)
+            Provider.of<UserProvider>(context, listen: false)
                 .setUser(response.body);
             Navigator.pushNamedAndRemoveUntil(
               // ignore: use_build_context_synchronously
@@ -89,48 +88,13 @@ class AuthService {
           });
     } catch (e) {
       // ignore: use_build_context_synchronously
+
+      print(e);
       showSnackBar(context, e.toString());
     }
   }
 
-  // void getUserData(
-  //   BuildContext context,
-  // ) async {
-  //   try {
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     String? token = prefs.getString('x-auth-token');
-  //     if (token == null) {
-  //       prefs.setString('x-auth-token', '');
-  //     }
-  //     var tokenRes = await http.post(
-  //       Uri.parse('$uri/tokenValid'),
-  //       headers: <String, String>{
-  //         'Content-Type': 'application/json; charset=UTF-8',
-  //         'x-auth-token': token!
-  //       },
-  //     );
-
-  //     var response = jsonDecode(tokenRes.body);
-
-  //     if (response == true) {
-  //       http.Response userRes = await http.get(
-  //         Uri.parse('$uri/'),
-  //         headers: <String, String>{
-  //           'Content-Type': 'application/json; charset=UTF-8',
-  //           'x-auth-token': token
-  //         },
-  //       );
-  //       // ignore: use_build_context_synchronously
-  //       var userProvider = Provider.of<UserProvider>(context, listen: false);
-  //       userProvider.setUser(userRes.body);
-  //     }
-  //   } catch (e) {
-  //     // ignore: use_build_context_synchronously
-  //     showSnackBar(context, e.toString());
-  //   }
-  // }
-
-void getUserData(
+  void getUserData(
     BuildContext context,
   ) async {
     try {
@@ -138,7 +102,7 @@ void getUserData(
       String? token = prefs.getString('x-auth-token');
 
       if (token == null) {
-        prefs.setString('x-auth-token','');
+        prefs.setString('x-auth-token', '');
       }
 
       var tokenRes = await http.post(
@@ -152,7 +116,7 @@ void getUserData(
       var response = jsonDecode(tokenRes.body);
 
       if (response == true) {
-        http.Response userRes = await http.get( 
+        http.Response userRes = await http.get(
           Uri.parse('$uri/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
@@ -161,12 +125,10 @@ void getUserData(
         );
 
         var userProvider = Provider.of<UserProvider>(context, listen: false);
-        print('userRes.body');
-        print(userRes.body);
         userProvider.setUser(userRes.body);
       }
     } catch (e) {
-      // showSnackBar(context, e.toString());
+      showSnackBar(context, e.toString());
     }
   }
 }

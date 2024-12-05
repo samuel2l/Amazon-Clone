@@ -15,12 +15,13 @@ class ProductsSold extends StatefulWidget {
 
 class _ProductsSoldState extends State<ProductsSold> {
   final AdminService adminService = AdminService();
-  List productList = [];
+  List? productList = [];
+
   void getAllProducts() async {
     String res = await adminService.getAllProducts(context);
 
     for (int item = 0; item < (jsonDecode(res)).length; item++) {
-      productList.add(jsonDecode(res)[item]);
+      productList!.add(jsonDecode(res)[item]);
     }
     setState(() {});
   }
@@ -34,52 +35,67 @@ class _ProductsSoldState extends State<ProductsSold> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, AddProduct.routeName);
-        },
-        shape: const CircleBorder(),
-        tooltip: 'Add New product',
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),
-          itemCount: productList.length,
-          itemBuilder: (context, index) {
-            var product = productList[index];
-            List<String> images = product['images'].cast<String>();
-            print(images);
-            return Column(
-              children: [
-                // SizedBox(
-                //   height: 180,
-                //   child: Image.network(
-                //     product['images'][0],
-                //     fit: BoxFit.fitHeight,
-                //   ),
-                // ),
-                CarouselSlider(
-                  items: images.map((img) {
-                    return Image.network(img);
-                  }).toList(),
-                  options: CarouselOptions(viewportFraction: 1),
+    return productList == null
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AddProduct.routeName);
+              },
+              shape: const CircleBorder(),
+              tooltip: 'Add New product',
+              child: const Icon(Icons.add),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
                 ),
+                itemCount: productList!.length,
+                itemBuilder: (context, index) {
+                  var product = productList![index];
+                  List<String> images = product['images'].cast<String>();
+                  return Column(
+                    children: [
+                      // SizedBox(
+                      //   height: 180,
+                      //   child: Image.network(
+                      //     product['images'][0],
+                      //     fit: BoxFit.fitHeight,
+                      //   ),
+                      // ),
+                      CarouselSlider(
+                        items: images.map((img) {
+                          return Image.network(img);
+                        }).toList(),
+                        options: CarouselOptions(viewportFraction: 1),
+                      ),
 
-                Align(
-                    alignment: Alignment.topLeft, child: Text(product['name']))
-              ],
-            );
-          },
-        ),
-      ),
-    );
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Text(
+                          product['name'],
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          adminService.deleteProduct(
+                              context: context, id: product['_id']);
+                        },
+                        icon: const Icon(Icons.delete),
+                      )
+                    ],
+                  );
+                },
+              ),
+            ),
+          );
   }
 }
