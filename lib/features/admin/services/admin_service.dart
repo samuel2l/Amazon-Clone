@@ -65,7 +65,7 @@ class AdminService {
   getAllProducts(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
-    // try {
+    // try { 
     http.Response response = await http.get(
       Uri.parse('$uri/admin/products'),
       headers: {
@@ -89,8 +89,6 @@ class AdminService {
     required String id,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    print('id being sent');
-    print(id);
     try {
       http.Response response = await http.delete(
         Uri.parse('$uri/admin/products/$id'),
@@ -166,4 +164,6 @@ class AdminService {
       showSnackBar(context, e.toString());
     }
   }
+
+
 }

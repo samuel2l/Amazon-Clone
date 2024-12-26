@@ -1,4 +1,5 @@
 import 'package:amazon/constants.dart';
+import 'package:amazon/features/home/services/home_service.dart';
 import 'package:amazon/providers/user_provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  HomeService service = HomeService();
+  void getProductsByCategory(category) async {
+    var res =
+        service.getProductsByCategory(context: context, category: category);
+    print(res);
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
@@ -64,11 +72,33 @@ class _HomeState extends State<Home> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset('assets/images/appliances.jpeg'),
-                Image.asset('assets/images/electronics.jpeg'),
-                Image.asset('assets/images/appliances.jpeg'),
-                Image.asset('assets/images/electronics.jpeg'),
-                Image.asset('assets/images/appliances.jpeg'),
+                GestureDetector(
+                    onTap: () {
+                      getProductsByCategory('Essentials');
+                    },
+                    child: Image.asset('assets/images/appliances.jpeg')),
+                GestureDetector(
+                                      onTap: () {
+                      getProductsByCategory('Electronics');
+                    },
+                    child: Image.asset('assets/images/electronics.jpeg')),
+                GestureDetector(
+                                      onTap: () {
+                      getProductsByCategory('Fashion');
+                    },
+                  child: Image.asset('assets/images/fashion.jpeg'),
+                ),
+                GestureDetector(
+                                      onTap: () {
+                      getProductsByCategory('Books');
+                    },
+                  child: Image.asset('assets/images/books.jpeg')),
+                GestureDetector(
+                                      onTap: () {
+                      getProductsByCategory('Mobiles');
+                    },
+                  child: Image.asset('assets/images/mobiles.jpeg'),
+                )
               ],
             ),
           ),

@@ -4,7 +4,6 @@ import 'package:amazon/features/admin/screens/add_product.dart';
 import 'package:amazon/features/admin/services/admin_service.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class ProductsSold extends StatefulWidget {
   const ProductsSold({super.key});
@@ -34,9 +33,18 @@ class _ProductsSoldState extends State<ProductsSold> {
   }
 
   @override
+  void dispose() {
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return productList == null
-        ? Center(
+    // this is why we make product list nullable. so we can use a circular progress
+    //cos if there are no products it means the circular will show sahn
+    //but if nullable it will be initially null and if empty then it will be []
+        ? const Center(
             child: CircularProgressIndicator(),
           )
         : Scaffold(
@@ -77,20 +85,21 @@ class _ProductsSoldState extends State<ProductsSold> {
                         }).toList(),
                         options: CarouselOptions(viewportFraction: 1),
                       ),
-
-                      Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Text(
-                          product['name'],
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            product['name'],
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              adminService.deleteProduct(
+                                  context: context, id: product['_id']);
+                            },
+                            icon: const Icon(Icons.delete),
+                          )
+                        ],
                       ),
-                      IconButton(
-                        onPressed: () {
-                          adminService.deleteProduct(
-                              context: context, id: product['_id']);
-                        },
-                        icon: const Icon(Icons.delete),
-                      )
                     ],
                   );
                 },

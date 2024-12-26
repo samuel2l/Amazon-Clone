@@ -24,10 +24,15 @@ void httpErrorHandle({
 }
 
 void showSnackBar(BuildContext context, String text) {
+ try{
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(text),
     ),
   );
+
+ }catch(e){
+  print(e);
+ }
 }
 
