@@ -2,6 +2,9 @@ import 'package:amazon/features/admin/screens/add_product.dart';
 import 'package:amazon/features/auth/screens/auth.dart';
 import 'package:amazon/features/common/widgets/bottom_navbar.dart';
 import 'package:amazon/features/home/screens/home.dart';
+import 'package:amazon/features/home/screens/products_by_category.dart';
+import 'package:amazon/features/models/product.dart';
+import 'package:amazon/features/products/screens/product_details.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -18,6 +21,20 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case AddProduct.routeName:
       return MaterialPageRoute(
           builder: (_) => const AddProduct(), settings: routeSettings);
+    case ProductsByCategory.routeName:
+      final args = routeSettings.arguments as Map<String, String>;
+      return MaterialPageRoute(
+          builder: (_) => ProductsByCategory(
+                category: args['category'] ?? '',
+              ),
+          settings: routeSettings);
+    case ProductDetails.routeName:
+      final args = routeSettings.arguments as Product;
+      return MaterialPageRoute(
+          builder: (_) => ProductDetails(
+                product: args,
+              ),
+          settings: routeSettings);
 
     default:
       return MaterialPageRoute(

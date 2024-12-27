@@ -1,4 +1,5 @@
 import 'package:amazon/constants.dart';
+import 'package:amazon/features/home/screens/products_by_category.dart';
 import 'package:amazon/features/home/services/home_service.dart';
 import 'package:amazon/providers/user_provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -14,13 +15,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  HomeService service = HomeService();
-  void getProductsByCategory(category) async {
-    var res =
-        service.getProductsByCategory(context: context, category: category);
-    print(res);
-  }
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
@@ -69,37 +63,57 @@ class _HomeState extends State<Home> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 18),
             height: 70,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                            ProductsByCategory.routeName,
+                            arguments: {"category": "Essentials"});
+                      },
+                      child: Image.asset('assets/images/essentials.jpeg')),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                            ProductsByCategory.routeName,
+                            arguments: {"category": "Appliances"});
+                      },
+                      child: Image.asset('assets/images/appliances.jpeg')),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                            ProductsByCategory.routeName,
+                            arguments: {"category": "Electronics"});
+                      },
+                      child: Image.asset('assets/images/electronics.jpeg')),
+                  GestureDetector(
                     onTap: () {
-                      getProductsByCategory('Essentials');
+                      Navigator.of(context).pushNamed(
+                          ProductsByCategory.routeName,
+                          arguments: {"category": "Fashion"});
                     },
-                    child: Image.asset('assets/images/appliances.jpeg')),
-                GestureDetector(
-                                      onTap: () {
-                      getProductsByCategory('Electronics');
+                    child: Image.asset('assets/images/fashion.jpeg'),
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                            ProductsByCategory.routeName,
+                            arguments: {"category": "Books"});
+                      },
+                      child: Image.asset('assets/images/books.jpeg')),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                          ProductsByCategory.routeName,
+                          arguments: {"category": "Mobiles"});
                     },
-                    child: Image.asset('assets/images/electronics.jpeg')),
-                GestureDetector(
-                                      onTap: () {
-                      getProductsByCategory('Fashion');
-                    },
-                  child: Image.asset('assets/images/fashion.jpeg'),
-                ),
-                GestureDetector(
-                                      onTap: () {
-                      getProductsByCategory('Books');
-                    },
-                  child: Image.asset('assets/images/books.jpeg')),
-                GestureDetector(
-                                      onTap: () {
-                      getProductsByCategory('Mobiles');
-                    },
-                  child: Image.asset('assets/images/mobiles.jpeg'),
-                )
-              ],
+                    child: Image.asset('assets/images/mobiles.jpeg'),
+                  )
+                ],
+              ),
             ),
           ),
           const SizedBox(

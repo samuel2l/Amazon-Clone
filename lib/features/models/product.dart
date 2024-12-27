@@ -3,7 +3,7 @@ import 'dart:convert';
 
 class Product {
   final String name;
-  final double price;
+  final dynamic price;
   final String description;
   final int stock;
   final String? id;
@@ -26,14 +26,15 @@ class Product {
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
         name: map['name'] as String,
-        price: map['price'] as double,
+        price: (map['price'] ?? 0).toDouble(),
         description: map['description'] as String,
         stock: map['stock'] as int,
         id: map['_id'] != null ? map['_id'] as String : null,
         category: map['category'] as String,
-        images: List<String>.from(
-          (map['images'] as List<String>),
-        ));
+        images: List<String>.from(map['images'] as List<dynamic>),
+        // the as list<dynamic> probably not needed cos all images from db are already strings but are dynamic when you use json decode
+        
+        );
   }
 
   String toJson() => json.encode(toMap());
