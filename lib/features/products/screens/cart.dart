@@ -29,6 +29,13 @@ class _CartState extends State<Cart> {
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().user;
     print(user.cart);
+    for (var item in user.cart) {
+      print(item.product.images);
+      print(item.product.name);
+      print(item.amount);
+
+      print("next product");
+    }
     int sum = 0;
 
     return Scaffold(

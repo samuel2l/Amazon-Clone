@@ -16,8 +16,6 @@ class ProductDetailsService {
       required Product product,
       required int amount,
       bool isRemove = false}) async {
-    print('product being sent');
-    print(product.id);
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     try {
@@ -41,8 +39,22 @@ class ProductDetailsService {
         context: context,
         onSuccess: () {
           showSnackBar(context, 'Product added to cart');
-          CartItem cartItem=CartItem(product: product,amount: 2);
-        userProvider.user.cart.add(cartItem);
+          // instead of keeping the cart as part of state management you could just call api using the req.user id
+          CartItem cartItem=CartItem(product: product,amount: amount);
+
+        
+int existingItemIndex = userProvider.user.cart.indexWhere(
+  (item) => item.product.id == cartItem.product.id,
+);
+
+if (existingItemIndex != -1) {
+
+  userProvider.user.cart[existingItemIndex]=cartItem;
+} else {
+  userProvider.user.cart.add(cartItem);
+}
+
+
         },
       );
     } catch (e) {
