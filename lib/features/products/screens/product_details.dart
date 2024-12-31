@@ -3,6 +3,7 @@ import 'package:amazon/features/models/product.dart';
 import 'package:amazon/features/products/services/product_details_service.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ProductDetails extends StatefulWidget {
   static const String routeName = '/product-details';
@@ -240,25 +241,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
             ),
-            // RatingBar.builder(
-            //   initialRating: myRating,
-            //   minRating: 1,
-            //   direction: Axis.horizontal,
-            //   allowHalfRating: true,
-            //   itemCount: 5,
-            //   itemPadding: const EdgeInsets.symmetric(horizontal: 4),
-            //   itemBuilder: (context, _) => const Icon(
-            //     Icons.star,
-            //     color: GlobalVariables.secondaryColor,
-            //   ),
-            //   onRatingUpdate: (rating) {
-            //     productDetailsService.rateProduct(
-            //       context: context,
-            //       product: widget.product,
-            //       rating: rating,
-            //     );
-            //   },
-            // )
+            RatingBar.builder(
+              initialRating: myRating,
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemPadding: const EdgeInsets.symmetric(horizontal: 4),
+              itemBuilder: (context, _) => const Icon(
+                Icons.star,
+                color: secondaryColor,
+              ),
+              onRatingUpdate: (rating) {
+                productDetailsService.rateProduct(
+                  context: context,
+                  product: widget.product,
+                  rating: rating,
+                );
+              },
+            )
           ],
         ),
       ),

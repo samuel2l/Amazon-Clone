@@ -3,7 +3,9 @@ import 'package:amazon/constants.dart';
 import 'package:amazon/features/products/screens/product_details.dart';
 import 'package:amazon/features/search/services/search_service.dart';
 import 'package:amazon/features/search/widgets/searched_product.dart';
+import 'package:amazon/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Search extends StatefulWidget {
   static const String routeName = '/search-product';
@@ -18,6 +20,7 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   List? products;
   final SearchService searchService = SearchService();
+
 
   @override
   void initState() {
@@ -38,6 +41,9 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
+          final userProvider = Provider.of<UserProvider>(context, listen: false);
+          print(userProvider.user.token);
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
