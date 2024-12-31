@@ -247,24 +247,48 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: const Text('Add to Cart'),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: decrementQuantity,
-                        icon: const Icon(Icons.remove),
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: () => decrementQuantity,
+                      child: Container(
+                        width: 35,
+                        height: 32,
+                        alignment: Alignment.center,
+                        child: const Icon(
+                          Icons.remove,
+                          size: 18,
+                        ),
                       ),
-                      Text(
-                        quantity.toString(),
-                        style: const TextStyle(fontSize: 18),
+                    ),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black12, width: 1.5),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(0),
                       ),
-                      IconButton(
-                        onPressed: incrementQuantity,
-                        icon: const Icon(Icons.add),
+                      child: Container(
+                        width: 35,
+                        height: 32,
+                        alignment: Alignment.center,
+                        child: Text(
+                          quantity.toString(),
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                    InkWell(
+                      onTap: () => incrementQuantity(),
+                      child: Container(
+                        width: 35,
+                        height: 32,
+                        alignment: Alignment.center,
+                        child: const Icon(
+                          Icons.add,
+                          size: 18,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

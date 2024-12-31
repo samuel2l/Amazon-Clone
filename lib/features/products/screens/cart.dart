@@ -28,7 +28,7 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().user;
-    print(user.cart[0].product.description);
+    print(user.cart);
     int sum = 0;
 
     return Scaffold(
@@ -104,35 +104,33 @@ class _CartState extends State<Cart> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // const AddressBox(),
-            // const CartSubtotal(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextButton(
-                child: Text('Proceed to Buy (${user.cart.length} items)'),
-                onPressed: () => navigateToAddress(sum),
-              ),
+      body: ListView(
+        children: [
+          // const AddressBox(),
+          // const CartSubtotal(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton(
+              child: Text('Proceed to Buy (${user.cart.length} items)'),
+              onPressed: () => navigateToAddress(sum),
             ),
-            const SizedBox(height: 15),
-            Container(
-              color: Colors.black12.withOpacity(0.08),
-              height: 1,
-            ),
-            const SizedBox(height: 5),
-            ListView.builder(
-              itemCount: user.cart.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return CartProduct(
-                  index: index,
-                );
-              },
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 15),
+          Container(
+            color: Colors.black12.withOpacity(0.08),
+            height: 1,
+          ),
+          const SizedBox(height: 5),
+          ListView.builder(
+            itemCount: user.cart.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return CartProduct(
+                index: index,
+              );
+            },
+          ),
+        ],
       ),
     );
   }
