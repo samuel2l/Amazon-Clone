@@ -1,15 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-class User {
-final String id;
-final String name;
-final String password;
-final String address;
-final String type;
-final String token;
+import 'package:amazon/features/models/cartItem.dart';
 
-final String email;
+class User {
+  final String id;
+  final String name;
+  final String password;
+  final String address;
+  final String type;
+  final String token;
+
+  final String email;
+  final List<CartItem> cart;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -20,6 +23,7 @@ final String email;
       'type': type,
       'token': token,
       'email': email,
+      'cart':cart
     };
   }
 
@@ -32,12 +36,25 @@ final String email;
       type: map['type'] as String,
       token: map['token'] as String,
       email: map['email'] as String,
+      cart: (map['cart'] as List<dynamic>)
+          .map((item) => CartItem.fromMap(item as Map<String, dynamic>))
+          .toList(),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory User.fromJson(String source) =>
+      User.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  User({required this.id, required this.name, required this.password, required this.address, required this.type, required this.token, required this.email});
+  User(
+      {required this.id,
+      required this.name,
+      required this.password,
+      required this.address,
+      required this.type,
+      required this.token,
+      required this.email,
+      required this.cart
+      });
 }

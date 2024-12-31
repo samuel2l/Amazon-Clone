@@ -1,6 +1,7 @@
 import 'package:amazon/constants.dart';
 import 'package:amazon/features/account/screens/account.dart';
 import 'package:amazon/features/home/screens/home.dart';
+import 'package:amazon/features/products/screens/cart.dart';
 
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
@@ -20,7 +21,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   List<Widget> pages = [
     const Home(),
     const Account(),
-    const Center(child: Text('page 3')),
+    const Cart(),
   ];
 
   void updatePage(int page) {

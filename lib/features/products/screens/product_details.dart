@@ -42,12 +42,32 @@ class _ProductDetailsState extends State<ProductDetails> {
   void navigateToSearchScreen(String query) {
     // Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
+  int quantity = 1; // Initialize quantity to 1
+
+  void incrementQuantity() {
+    setState(() {
+      quantity++;
+    });
+  }
+
+  void decrementQuantity() {
+    setState(() {
+      if (quantity > 1) quantity--; // Ensure quantity does not go below 1
+    });
+  }
 
   void addToCart() {
-    // productDetailsService.addToCart(
-    //   context: context,
-    //   product: widget.product,
-    // );
+    productDetailsService.editCart(
+        context: context, product: widget.product, amount: quantity);
+  }
+
+  TextEditingController amountController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    amountController.dispose();
+    super.dispose();
   }
 
   @override
@@ -215,17 +235,39 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
             ),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: TextButton(
-                onPressed: addToCart,
-                style: TextButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(254, 216, 19, 1),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: TextButton(
+                    onPressed: addToCart,
+                    style: TextButton.styleFrom(
+                      backgroundColor: const Color.fromRGBO(254, 216, 19, 1),
+                    ),
+                    child: const Text('Add to Cart'),
+                  ),
                 ),
-                child: const Text('Add to Cart'),
-              ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: decrementQuantity,
+                        icon: const Icon(Icons.remove),
+                      ),
+                      Text(
+                        quantity.toString(),
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                      IconButton(
+                        onPressed: incrementQuantity,
+                        icon: const Icon(Icons.add),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-
             const SizedBox(height: 10),
             Container(
               color: Colors.black12,

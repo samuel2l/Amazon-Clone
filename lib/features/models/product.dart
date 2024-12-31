@@ -10,7 +10,7 @@ class Product {
   final String category;
   final List<String> images;
   final List<Map<String, dynamic>> ratings;
-
+  
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
@@ -26,13 +26,13 @@ class Product {
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-      name: map['name'] as String,
+      name: (map['name']??'') as String,
       price: (map['price'] ?? 0).toDouble(),
-      description: map['description'] as String,
-      stock: map['stock'] as int,
+      description: (map['description']??'') as String,
+      stock: (map['stock']??0) as int,
       id: map['_id'] != null ? map['_id'] as String : null,
-      category: map['category'] as String,
-      images: List<String>.from(map['images'] as List<dynamic>),
+      category: (map['category']??'') as String,
+      images: List<String>.from((map['images']??[]) as List<dynamic>),
       ratings: map['ratings'] != null
           ? List<Map<String, dynamic>>.from(map['ratings'] as List<dynamic>)
           : [],

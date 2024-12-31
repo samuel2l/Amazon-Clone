@@ -20,13 +20,16 @@ class AuthService {
       required BuildContext context}) async {
     try {
       User user = User(
-          id: '',
-          name: name,
-          password: password,
-          address: '',
-          type: '',
-          token: '',
-          email: email);
+        id: '',
+        name: name,
+        password: password,
+        address: '',
+        type: '',
+        token: '',
+        email: email,
+        cart: [],
+      );
+
       http.Response response = await http.post(
         Uri.parse('$uri/api/signup'),
         body: user.toJson(),
@@ -40,15 +43,18 @@ class AuthService {
           // ignore: use_build_context_synchronously
           context: context,
           onSuccess: () {
-            showSnackBar(context, 'Account created!');
             Provider.of<UserProvider>(context, listen: false)
                 .setUser(response.body);
             Navigator.pushNamedAndRemoveUntil(
               // ignore: use_build_context_synchronously
               context,
               BottomNavBar.routeName,
+    
               (route) => false,
             );
+          print("you no go push?");
+            showSnackBar(context, 'Account created!');
+
           });
     } catch (e) {
       // ignore: use_build_context_synchronously
