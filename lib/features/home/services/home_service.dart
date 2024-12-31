@@ -12,7 +12,7 @@ class HomeService {
       http.Response response = await http.get(
         Uri.parse('$uri/products/$category'),
       );
-      print(response.body);
+
       httpErrorHandle(
           response: response,
           // ignore: use_build_context_synchronously

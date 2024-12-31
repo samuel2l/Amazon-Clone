@@ -1,6 +1,6 @@
 import 'package:amazon/constants.dart';
 import 'package:amazon/features/home/screens/products_by_category.dart';
-import 'package:amazon/features/home/services/home_service.dart';
+import 'package:amazon/features/search/screens/search.dart';
 import 'package:amazon/providers/user_provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +15,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  void navigateToSearch(String query){
+    Navigator.of(context).pushNamed(Search.routeName,arguments: query);
+  }
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
@@ -34,6 +37,7 @@ class _HomeState extends State<Home> {
           width: 320,
           padding: const EdgeInsets.only(left: 20),
           child: TextFormField(
+            onFieldSubmitted: navigateToSearch,
             decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.search),
                 fillColor: Colors.white,
@@ -51,7 +55,7 @@ class _HomeState extends State<Home> {
           ListTile(
             leading: const Icon(Icons.location_on_outlined),
             title: Text(
-              'Delivery to ${user.name} - ${user.address} eqfboiwef wefionwefwoebinfwf ',
+              'Delivery to ${user.name} - ${user.address}  ',
               style: const TextStyle(overflow: TextOverflow.ellipsis),
             ),
             tileColor: const Color.fromARGB(255, 125, 221, 216),

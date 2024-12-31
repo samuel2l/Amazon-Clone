@@ -77,7 +77,7 @@ class _AddProductState extends State<AddProduct> {
             children: [
               GestureDetector(
                 onTap: () {
-                  pickImages(); // Use the updated pickImages method
+                  pickImages(); 
                 },
                 child: DottedBorder(
                   borderType: BorderType.RRect,

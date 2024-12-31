@@ -5,6 +5,7 @@ import 'package:amazon/features/home/screens/home.dart';
 import 'package:amazon/features/home/screens/products_by_category.dart';
 import 'package:amazon/features/models/product.dart';
 import 'package:amazon/features/products/screens/product_details.dart';
+import 'package:amazon/features/search/screens/search.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -33,6 +34,13 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           builder: (_) => ProductDetails(
                 product: args,
+              ),
+          settings: routeSettings);
+    case Search.routeName:
+      final query = routeSettings.arguments as String;
+      return MaterialPageRoute(
+          builder: (_) => Search(
+                query: query,
               ),
           settings: routeSettings);
 

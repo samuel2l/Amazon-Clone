@@ -39,8 +39,17 @@ class Product {
 
   String toJson() => json.encode(toMap());
 
-  factory Product.fromJson(String source) =>
-      Product.fromMap(json.decode(source) as Map<String, dynamic>);
+factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      name: json['name'] as String,
+      price: json['price'], 
+      description: json['description'] as String,
+      stock: json['stock'] as int,
+      id: json['_id'] as String?,
+      category: json['category'] as String,
+      images: List<String>.from(json['images'] as List<dynamic>),
+    );
+  }
   Product(
       {required this.name,
       required this.price,
