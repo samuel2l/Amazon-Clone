@@ -16,27 +16,43 @@ class CartProduct extends StatefulWidget {
 }
 
 class _CartProductState extends State<CartProduct> {
-  final ProductDetailsService productDetailsService = ProductDetailsService();
-
-  void increaseQuantity() {
-    // productDetailsService.editCart(
-    //     context: context, product: product, amount: amount);
+  @override
+  void initState() {
+    super.initState();
+    // Initialize quantity from the cart item
+    final cartItem = context.read<UserProvider>().user.cart[widget.index];
+    quantity = cartItem.amount;
   }
 
-  void decreaseQuantity(Product product) {
-    // cartServices.removeFromCart(
-    //   context: context,
-    //   product: product,
-    // );
+  final ProductDetailsService productDetailsService = ProductDetailsService();
+
+  int? quantity;
+
+  void incrementQuantity() {
+    setState(() {
+      quantity = quantity! + 1;
+    });
+  }
+
+  void decrementQuantity() {
+    setState(() {
+      if (quantity! > 1) quantity = quantity! - 1;
+    });
+  }
+
+  void editCart(Product product, bool isRemove) {
+    productDetailsService.editCart(
+        context: context,
+        product: product,
+        amount: quantity!,
+        isRemove: isRemove);
+
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     final cartItem = context.watch<UserProvider>().user.cart[widget.index];
-
-    // final product = cartItem.product;
-    // // final quantity = cartItem['quantity'];
-    // final int quantity = cartItem.amount;
 
     return Column(
       children: [
@@ -81,11 +97,6 @@ class _CartProductState extends State<CartProduct> {
                   ),
                   Container(
                     width: 235,
-                    padding: const EdgeInsets.only(left: 10),
-                    child: const Text('Eligible for FREE Shipping'),
-                  ),
-                  Container(
-                    width: 235,
                     padding: const EdgeInsets.only(left: 10, top: 5),
                     child: const Text(
                       'In Stock',
@@ -99,6 +110,62 @@ class _CartProductState extends State<CartProduct> {
               ),
             ],
           ),
+        ),
+        Row(
+          children: [
+            InkWell(
+              onTap: () => decrementQuantity(),
+              child: Container(
+                width: 35,
+                height: 32,
+                alignment: Alignment.center,
+                child: const Icon(
+                  Icons.remove,
+                  size: 18,
+                ),
+              ),
+            ),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black12, width: 1.5),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(0),
+              ),
+              child: Container(
+                width: 35,
+                height: 32,
+                alignment: Alignment.center,
+                child: Text(
+                  quantity.toString(),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () => incrementQuantity(),
+              child: Container(
+                width: 35,
+                height: 32,
+                alignment: Alignment.center,
+                child: const Icon(
+                  Icons.add,
+                  size: 18,
+                ),
+              ),
+            ),
+            const Spacer(),
+            ElevatedButton(
+              onPressed: () {
+                editCart(cartItem.product, false);
+              },
+              child: const Text('Update'),
+            ),
+            IconButton(
+              onPressed: () {
+                editCart(cartItem.product, true);
+              },
+              icon: const Icon(Icons.delete, color: Colors.red),
+            ),
+          ],
         ),
       ],
     );

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 class SearchedProduct extends StatelessWidget {
   final Product product;
   const SearchedProduct({
-    Key? key,
+    super.key,
     required this.product,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

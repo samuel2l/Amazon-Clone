@@ -42,7 +42,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   void navigateToSearchScreen(String query) {
     // Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
-  int quantity = 1; // Initialize quantity to 1
+  int quantity = 1; 
 
   void incrementQuantity() {
     setState(() {

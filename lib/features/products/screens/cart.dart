@@ -1,4 +1,5 @@
 import 'package:amazon/constants.dart';
+import 'package:amazon/features/products/services/product_details_service.dart';
 import 'package:amazon/features/products/widgets/cart_product.dart';
 import 'package:amazon/features/search/screens/search.dart';
 import 'package:amazon/providers/user_provider.dart';
@@ -13,8 +14,28 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  final ProductDetailsService productDetailsService = ProductDetailsService();
+
+  int quantity = 1;
   void navigateToSearch(String query) {
     Navigator.pushNamed(context, Search.routeName, arguments: query);
+  }
+
+  void incrementQuantity() {
+    setState(() {
+      quantity++;
+    });
+  }
+
+  void decrementQuantity() {
+    setState(() {
+      if (quantity > 1) quantity--; // Ensure quantity does not go below 1
+    });
+  }
+
+  void addToCart() {
+    // productDetailsService.editCart(
+    //     context: context, product: widget.product, amount: quantity);
   }
 
   void navigateToAddress(int sum) {
@@ -28,14 +49,6 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().user;
-    print(user.cart);
-    for (var item in user.cart) {
-      print(item.product.images);
-      print(item.product.name);
-      print(item.amount);
-
-      print("next product");
-    }
     int sum = 0;
 
     return Scaffold(
