@@ -63,6 +63,7 @@ class ProductDetailsService extends ChangeNotifier {
         },
       );
     } catch (e) {
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
   }
