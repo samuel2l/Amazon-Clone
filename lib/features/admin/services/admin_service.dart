@@ -103,9 +103,6 @@ class AdminService {
           context: context,
           onSuccess: () {
             showSnackBar(context, 'Product deleted successfully');
-            // Navigator.pop(
-            //   context,
-            // );
           });
     } catch (e) {
       // ignore: use_build_context_synchronously

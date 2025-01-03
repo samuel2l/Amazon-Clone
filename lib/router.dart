@@ -1,3 +1,4 @@
+import 'package:amazon/features/address/screens/address.dart';
 import 'package:amazon/features/admin/screens/add_product.dart';
 import 'package:amazon/features/auth/screens/auth.dart';
 import 'package:amazon/features/common/widgets/bottom_navbar.dart';
@@ -43,8 +44,13 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
                 query: query,
               ),
           settings: routeSettings);
-
-    default:
+case Address.routeName:
+      final totalAmount = routeSettings.arguments as String;
+      return MaterialPageRoute(
+          builder: (_) => Address(
+                totalAmount: totalAmount,
+              ),
+          settings: routeSettings);    default:
       return MaterialPageRoute(
           builder: (_) => const Text('this page does not exist'),
           settings: routeSettings);

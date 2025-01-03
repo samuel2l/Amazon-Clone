@@ -1,4 +1,5 @@
 import 'package:amazon/constants.dart';
+import 'package:amazon/features/address/screens/address.dart';
 import 'package:amazon/features/products/services/product_details_service.dart';
 import 'package:amazon/features/products/widgets/cart_product.dart';
 import 'package:amazon/features/search/screens/search.dart';
@@ -21,29 +22,12 @@ class _CartState extends State<Cart> {
     Navigator.pushNamed(context, Search.routeName, arguments: query);
   }
 
-  void incrementQuantity() {
-    setState(() {
-      quantity++;
-    });
-  }
-
-  void decrementQuantity() {
-    setState(() {
-      if (quantity > 1) quantity--; // Ensure quantity does not go below 1
-    });
-  }
-
-  void addToCart() {
-    // productDetailsService.editCart(
-    //     context: context, product: widget.product, amount: quantity);
-  }
-
   void navigateToAddress(int sum) {
-    // Navigator.pushNamed(
-    //   context,
-    //   AddressScreen.routeName,
-    //   arguments: sum.toString(),
-    // );
+    Navigator.pushNamed(
+      context,
+      Address.routeName,
+      arguments: sum.toString(),
+    );
   }
 
   @override

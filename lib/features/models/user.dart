@@ -26,7 +26,27 @@ class User {
       'cart':cart
     };
   }
-
+User copyWith({
+    String? id,
+    String? name,
+    String? password,
+    String? address,
+    String? type,
+    String? token,
+    String? email,
+    List<CartItem>? cart,
+  }) {
+    return User(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      password: password ?? this.password,
+      address: address ?? this.address,
+      type: type ?? this.type,
+      token: token ?? this.token,
+      email: email ?? this.email,
+      cart: cart ?? this.cart,
+    );
+  }
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['_id'] as String,
